@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TractoLabel — Les tracteurs légendaires</title>
+<meta name="description" content="Le classement des tracteurs qui ont marqué leur époque, du Fordson au Fendt Vario.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Work+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --soil:#2E2016;
+  --straw:#F2DFA4;
+  --hay:#E3B23C;
+  --enamel:#9E2A1C;
+  --sky:#C9D6CF;
+  --ink:#2E2016;
+  --bg:#F7EBC6;
+  --card:#FFF8E2;
+  --muted:#6B5641;
+  --line:#2E2016;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ink:#F2DFA4;--bg:#1D140D;--card:#2A1E14;--muted:#C5AE86;--line:#F2DFA4;--enamel:#E05A3F;--hay:#E8BC4F;
+  }
+}
+:root[data-theme="dark"]{--ink:#F2DFA4;--bg:#1D140D;--card:#2A1E14;--muted:#C5AE86;--line:#F2DFA4;--enamel:#E05A3F;--hay:#E8BC4F;}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 "Work Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+img,svg{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--hay);outline-offset:3px}
+
+/* HERO — la plaque constructeur */
+.hero{background:var(--soil);color:var(--straw);padding:clamp(2.5rem,7vw,5.5rem) 1.25rem clamp(3rem,8vw,6rem);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:28px;
+  background:repeating-linear-gradient(115deg,var(--hay) 0 18px,transparent 18px 36px);opacity:.9}
+.hero-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:2.5rem;align-items:center}
+.plate{border:4px solid var(--hay);border-radius:14px;padding:1.6rem 1.8rem;position:relative;background:#3A2A1D}
+.plate::before,.plate::after{content:"";position:absolute;top:12px;width:12px;height:12px;border-radius:50%;background:var(--hay);box-shadow:0 calc(100% + 0px) 0 var(--hay)}
+.plate::before{left:12px}.plate::after{right:12px}
+.brand{font-family:"Alfa Slab One",Rockwell,"Roboto Slab",Georgia,serif;font-size:clamp(2.6rem,8vw,5.2rem);line-height:.95;margin:.2rem 0 .8rem;letter-spacing:-.01em;color:var(--hay)}
+.hero p{margin:0;max-width:34ch;font-size:1.15rem;color:var(--straw)}
+.hero svg{width:100%;height:auto;color:var(--straw)}
+@media (max-width:760px){.hero-inner{grid-template-columns:1fr}.hero svg{max-width:340px;margin:0 auto;display:block}}
+
+/* Filtres époque */
+main{max-width:1080px;margin:0 auto;padding:3rem 1.25rem 4rem}
+.intro{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:1.25rem;margin-bottom:2rem}
+h2{font-family:"Alfa Slab One",Rockwell,Georgia,serif;font-weight:400;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.1;margin:0}
+.filters{display:flex;flex-wrap:wrap;gap:.5rem}
+.filters button{font:500 .95rem "Work Sans",system-ui,sans-serif;color:var(--ink);background:transparent;border:2px solid var(--line);border-radius:999px;padding:.45rem 1rem;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+
+/* Classement */
+ol.rank{list-style:none;margin:0;padding:0;counter-reset:r}
+.rank li{display:grid;grid-template-columns:5.5rem 1fr auto;gap:1.5rem;align-items:start;padding:1.6rem 0;border-top:2px solid var(--line)}
+.rank li:last-child{border-bottom:2px solid var(--line)}
+.rank li[hidden]{display:none}
+.pos{font-family:"Alfa Slab One",Rockwell,Georgia,serif;font-size:3.6rem;line-height:.9;color:var(--enamel)}
+.rank li:nth-child(-n+3) .pos{font-size:4.6rem}
+.rank h3{font-family:"Alfa Slab One",Rockwell,Georgia,serif;font-weight:400;font-size:1.55rem;line-height:1.15;margin:0 0 .25rem}
+.meta{color:var(--muted);font-weight:500;margin:0 0 .6rem}
+.rank p.why{margin:0;max-width:62ch}
+.year{font-family:"Alfa Slab One",Rockwell,Georgia,serif;font-size:1.3rem;background:var(--hay);color:#2E2016;border-radius:8px;padding:.3rem .7rem;white-space:nowrap}
+@media (max-width:640px){
+  .rank li{grid-template-columns:3.4rem 1fr;gap:1rem}
+  .pos,.rank li:nth-child(-n+3) .pos{font-size:2.8rem}
+  .year{grid-column:2;justify-self:start;font-size:1rem}
+}
+
+footer{background:var(--soil);color:var(--straw);padding:2rem 1.25rem}
+footer div{max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
+footer strong{font-family:"Alfa Slab One",Rockwell,Georgia,serif;font-weight:400;color:var(--hay)}
+@media (prefers-reduced-motion:no-preference){
+  .hero .wheel{transform-origin:center;transform-box:fill-box;animation:roll 1.6s ease-out 1}
+  @keyframes roll{from{transform:rotate(-200deg)}to{transform:rotate(0)}}
+}
+
+/* Photos */
+.photo{grid-area:photo;margin:0}
+.photo img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border:3px solid var(--line);border-radius:10px;background:var(--card)}
+.photo figcaption{font-size:.78rem;line-height:1.35;color:var(--muted);margin-top:.4rem}
+.photo figcaption a{text-decoration-thickness:1px;text-underline-offset:2px}
+.rank li{grid-template-columns:5.5rem minmax(200px,280px) 1fr auto;grid-template-areas:"pos photo text year"}
+.rank li>.pos{grid-area:pos}.rank li>div{grid-area:text}.rank li>.year{grid-area:year}
+@media (max-width:900px){
+  .rank li{grid-template-columns:4.5rem 1fr auto;grid-template-areas:"pos photo photo" "pos text year"}
+}
+@media (max-width:640px){
+  .rank li{grid-template-columns:3.4rem 1fr;grid-template-areas:"pos photo" "pos text" "pos year"}
+  .rank li>.year{grid-column:auto}
+}
+.credits{font-size:.85rem;opacity:.85;flex-basis:100%}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="plate">
+      <h1 class="brand">TractoLabel</h1>
+      <p>Le classement des tracteurs qui ont changé les champs, et parfois le monde. Cent ans de fer, de fumée et de moissons.</p>
+    </div>
+    <svg viewBox="0 0 400 260" role="img" aria-label="Silhouette de tracteur ancien">
+      <g fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M120 150 L120 95 L235 95 L250 60 L300 60 L300 150"/>
+        <path d="M150 95 L150 40 L172 40"/>
+        <path d="M235 95 L320 95 L340 150"/>
+        <path d="M60 150 L120 150"/>
+        <g class="wheel">
+          <circle cx="285" cy="180" r="70"/>
+          <circle cx="285" cy="180" r="18"/>
+          <path d="M285 110v52M285 198v52M215 180h52M303 180h52M235 130l37 37M298 193l37 37M335 130l-37 37M272 193l-37 37"/>
+        </g>
+        <circle cx="90" cy="205" r="38"/>
+        <circle cx="90" cy="205" r="10"/>
+        <path d="M10 252 H390"/>
+      </g>
+    </svg>
+  </div>
+</header>
+
+<main>
+  <div class="intro">
+    <h2>Le top 10 des légendes</h2>
+    <div class="filters" role="group" aria-label="Filtrer par époque">
+      <button type="button" data-era="all" aria-pressed="true">Toutes les époques</button>
+      <button type="button" data-era="pionniers" aria-pressed="false">Pionniers 1917–1939</button>
+      <button type="button" data-era="apres-guerre" aria-pressed="false">Après-guerre 1945–1970</button>
+      <button type="button" data-era="modernes" aria-pressed="false">Modernes 1970+</button>
+    </div>
+  </div>
+
+  <ol class="rank">
+    <li data-era="apres-guerre">
+      <span class="pos">1</span>
+      <figure class="photo"><img src="images/1-ferguson-te20.webp" loading="lazy" width="800" height="600" alt="Ferguson TE20 gris dans un rassemblement" decoding="async"><figcaption>Photo : <a href="https://commons.wikimedia.org/wiki/File:Ferguson_TE20,_Ribe_Dyrskue_2022.jpg" target="_blank" rel="noopener">Hjart</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Wikimedia Commons</figcaption></figure>
+      <div><h3>Ferguson TE20, le « Petit Gris »</h3>
+        <p class="meta">Royaume-Uni puis France · essence ou diesel · environ 25 ch</p>
+        <p class="why">Il a démocratisé l'attelage trois points avec relevage hydraulique, devenu la norme mondiale. En France, il a mécanisé des milliers de petites exploitations après la guerre. Le tracteur le plus attachant de l'histoire.</p></div>
+      <span class="year">1946</span>
+    </li>
+    <li data-era="pionniers">
+      <span class="pos">2</span>
+      <figure class="photo"><img src="images/2-fordson-f.webp" loading="lazy" width="800" height="600" alt="Fordson F de 1920 aux roues en fer" decoding="async"><figcaption>Photo : <a href="https://commons.wikimedia.org/wiki/File:Tracteur_Fordson_F_1920_Saint-Cybranet.jpg" target="_blank" rel="noopener">Père Igor</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Wikimedia Commons</figcaption></figure>
+      <div><h3>Fordson Model F</h3>
+        <p class="meta">États-Unis · 4 cylindres · environ 20 ch</p>
+        <p class="why">Le premier tracteur produit en grande série et vendu à un prix accessible. Ford y applique les méthodes de la Ford T : le cheval de trait commence à perdre sa place.</p></div>
+      <span class="year">1917</span>
+    </li>
+    <li data-era="pionniers">
+      <span class="pos">3</span>
+      <figure class="photo"><img src="images/3-farmall-regular.webp" loading="lazy" width="800" height="600" alt="Farmall Regular ancien" decoding="async"><figcaption>Photo : <a href="https://commons.wikimedia.org/wiki/File:Farmall_Regular_VA4.jpg" target="_blank" rel="noopener">Acroterion</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Wikimedia Commons</figcaption></figure>
+      <div><h3>Farmall Regular</h3>
+        <p class="meta">États-Unis · International Harvester</p>
+        <p class="why">Le premier vrai tracteur « polyvalent » : assez haut et étroit pour passer dans les rangs de cultures, il fait le labour, le binage et la récolte. Toute une catégorie de machines descend de lui.</p></div>
+      <span class="year">1924</span>
+    </li>
+    <li data-era="pionniers">
+      <span class="pos">4</span>
+      <figure class="photo"><img src="images/4-lanz-bulldog.webp" loading="lazy" width="800" height="600" alt="Lanz Bulldog gris aux jantes rouges" decoding="async"><figcaption>Photo : <a href="https://commons.wikimedia.org/wiki/File:Lanz_Bulldog_Kr%C3%B6v_2016.jpg" target="_blank" rel="noopener">Palauenc05</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Wikimedia Commons</figcaption></figure>
+      <div><h3>Lanz Bulldog</h3>
+        <p class="meta">Allemagne · monocylindre à boule chaude</p>
+        <p class="why">Un seul gros cylindre, un démarrage au chalumeau et ce « poc-poc » inimitable. Rustique, increvable, il avale presque tous les carburants. Copié partout, y compris en France avec les Vierzon.</p></div>
+      <span class="year">1921</span>
+    </li>
+    <li data-era="pionniers">
+      <span class="pos">5</span>
+      <figure class="photo"><img src="images/5-john-deere-model-d.webp" loading="lazy" width="800" height="600" alt="John Deere Model D vert et jaune" decoding="async"><figcaption>Photo : <a href="https://commons.wikimedia.org/wiki/File:John_Deere_Model_D_tractor_PA1.jpg" target="_blank" rel="noopener">Acroterion</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Wikimedia Commons</figcaption></figure>
+      <div><h3>John Deere Model D</h3>
+        <p class="meta">États-Unis · bicylindre</p>
+        <p class="why">Le bicylindre surnommé « Johnny Popper » pour son bruit. Produit pendant une trentaine d'années, il a installé la marque au vert et jaune dans les fermes du monde entier.</p></div>
+      <span class="year">1923</span>
+    </li>
+    <li data-era="apres-guerre">
+      <span class="pos">6</span>
+      <figure class="photo"><img src="images/6-massey-ferguson-135.webp" loading="lazy" width="800" height="600" alt="Massey Ferguson 135 rouge" decoding="async"><figcaption>Photo : <a href="https://commons.wikimedia.org/wiki/File:Massey_Ferguson_135_Diesel.jpg" target="_blank" rel="noopener">Reise Reise</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Wikimedia Commons</figcaption></figure>
+      <div><h3>Massey Ferguson 135</h3>
+        <p class="meta">Royaume-Uni et France · diesel 3 cylindres</p>
+        <p class="why">L'héritier du Petit Gris, vendu à des centaines de milliers d'exemplaires. Simple, réparable, on en voit encore tourner dans les cours de ferme soixante ans plus tard.</p></div>
+      <span class="year">1964</span>
+    </li>
+    <li data-era="apres-guerre">
+      <span class="pos">7</span>
+      <figure class="photo"><img src="images/7-porsche-diesel-junior.webp" loading="lazy" width="800" height="600" alt="Porsche-Diesel Junior rouge" decoding="async"><figcaption>Photo : <a href="https://commons.wikimedia.org/wiki/File:1958_Porsche_Diesel_Junior_F108.jpg" target="_blank" rel="noopener">Späth Chr. (user ChiemseeMan) – cropped/edited by Liftarn</a> · domaine public · Wikimedia Commons</figcaption></figure>
+      <div><h3>Porsche-Diesel Junior</h3>
+        <p class="meta">Allemagne · monocylindre refroidi par air</p>
+        <p class="why">Le petit tracteur rouge signé Porsche, pensé pour les petites fermes. Devenu une icône de collection, il fait toujours sourire dans les rassemblements.</p></div>
+      <span class="year">1957</span>
+    </li>
+    <li data-era="modernes">
+      <span class="pos">8</span>
+      <figure class="photo"><img src="images/8-fendt-favorit-926-vario.webp" loading="lazy" width="800" height="600" alt="Fendt Favorit 926 Vario vert" decoding="async"><figcaption>Photo : <a href="https://commons.wikimedia.org/wiki/File:Fendt_Favorit_926_Vario.jpg" target="_blank" rel="noopener">Dirk Ingo Franke</a> · <a href="https://creativecommons.org/licenses/by-sa/2.0" target="_blank" rel="noopener">CC BY-SA 2.0</a> · Wikimedia Commons</figcaption></figure>
+      <div><h3>Fendt Favorit 926 Vario</h3>
+        <p class="meta">Allemagne · transmission à variation continue</p>
+        <p class="why">Le premier tracteur de série avec une transmission à variation continue. Plus de rapports à passer : la vitesse s'ajuste en douceur. Toute l'industrie a suivi.</p></div>
+      <span class="year">1996</span>
+    </li>
+    <li data-era="modernes">
+      <span class="pos">9</span>
+      <figure class="photo"><img src="images/9-mb-trac.webp" loading="lazy" width="800" height="600" alt="MB-trac vert" decoding="async"><figcaption>Photo : <a href="https://commons.wikimedia.org/wiki/File:Mercedes-Benz_MB_Trac_1600_Turbo_pic1.JPG" target="_blank" rel="noopener">AlfvanBeem</a> · <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener">CC0</a> · Wikimedia Commons</figcaption></figure>
+      <div><h3>MB-trac</h3>
+        <p class="meta">Allemagne · Mercedes-Benz</p>
+        <p class="why">Cabine au centre, quatre roues égales, outils à l'avant comme à l'arrière. Un concept à part qui annonçait les porte-outils modernes et garde une communauté de fans fidèles.</p></div>
+      <span class="year">1972</span>
+    </li>
+    <li data-era="modernes">
+      <span class="pos">10</span>
+      <figure class="photo"><img src="images/10-big-bud-747.webp" loading="lazy" width="800" height="600" alt="Big Bud 747 et ses roues jumelées géantes" decoding="async"><figcaption>Photo : <a href="https://commons.wikimedia.org/wiki/File:Big_Bud_747.jpg" target="_blank" rel="noopener">Myron Reynard</a> · <a href="https://creativecommons.org/licenses/by-sa/2.0" target="_blank" rel="noopener">CC BY-SA 2.0</a> · Wikimedia Commons</figcaption></figure>
+      <div><h3>Big Bud 16V-747</h3>
+        <p class="meta">États-Unis · plus de 750 ch</p>
+        <p class="why">Le plus gros tracteur agricole jamais construit en exemplaire unique. Des roues plus hautes qu'un homme, un moteur de plus de 750 chevaux. Il travaille encore aujourd'hui.</p></div>
+      <span class="year">1977</span>
+    </li>
+  </ol>
+</main>
+
+<footer>
+  <div>
+    <span><strong>TractoLabel</strong> · tractolabel.fr</span>
+    <span>Un classement subjectif, des légendes incontestables.</span>
+    <span class="credits">Photos issues de Wikimedia Commons, recadrées et redimensionnées, utilisées selon leurs licences respectives (crédits sous chaque photo).</span>
+  </div>
+</footer>
+
+<script>
+const btns=document.querySelectorAll('.filters button');
+const items=document.querySelectorAll('.rank li');
+btns.forEach(b=>b.addEventListener('click',()=>{
+  btns.forEach(x=>x.setAttribute('aria-pressed',x===b));
+  const era=b.dataset.era;
+  items.forEach(li=>li.hidden=era!=='all'&&li.dataset.era!==era);
+}));
+</script>
+</body>
+</html>
